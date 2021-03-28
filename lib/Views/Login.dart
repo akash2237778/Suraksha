@@ -1,13 +1,19 @@
-import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:suraksha/Entity/User.dart';
 import 'package:suraksha/Views/Homepage.dart';
 import 'package:suraksha/Views/Registration.dart';
+import '../Entity/User.dart' as us;
 
-User currentUser;
-final userLoginAct = ValueNotifier<User>(currentUser);
+us.User currentUser;
+final userLoginAct = ValueNotifier<us.User>(currentUser);
+
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class LoginPage extends StatefulWidget {
   @override
@@ -142,7 +148,15 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text('Don\'t have account? Click to Sign Up', style: TextStyle(fontSize: 15),),
                       ),
                     ),
-                  )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 50.0),
+                    child: Center(
+                      child: Container(
+                        child: Text(errorMsg!=null?errorMsg:'', style: TextStyle(fontSize: 15),),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )),
@@ -150,7 +164,19 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+String errorMsg;
 
-void login(String username, String password, BuildContext context) async {
-
+void login(String email, String password, BuildContext context) async {
+  await Firebase.initializeApp();
+  var user = (await _auth.signInWithEmailAndPassword(email: email, password: password).onError((error, stackTrace){
+    errorMsg = error.toString();
+  }));
+  CollectionReference ref= FirebaseFirestore.instance.collection('users');
+  var snapshot = await ref.doc(user.user.email).get();
+  print("snapshot :  " +  snapshot.data().toString());
+  currentUser = us.User(name: snapshot.data()['name'], mobile: snapshot.data()['mobile'], mail: snapshot.data()['email'], contactData: {'Contact1': snapshot.data()['Contact1'], 'Contact2': snapshot.data()['Contact2']});
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => HomePage()),
+  );
 }

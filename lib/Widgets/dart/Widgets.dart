@@ -1,8 +1,10 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:suraksha/Views/Homepage.dart';
 import 'package:suraksha/Views/Login.dart';
+import 'package:suraksha/Views/ShareLocationView.dart';
 
 Container userStat(String attribute, String value, {String unit}) {
   return Container(
@@ -135,11 +137,11 @@ Widget longButton(String head, String description, IconData icon) {
   );
 }
 
-Widget startButton(bool isDisabled) {
+Widget startButton(bool isDisabled, BuildContext context, String buttonName, Function onTap) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 15.0),
     child: NeumorphicButton(
-      onPressed: () {},
+      onPressed: onTap,
       style: NeumorphicStyle(
           boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(20)),
           shape: NeumorphicShape.concave,
@@ -149,7 +151,7 @@ Widget startButton(bool isDisabled) {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0),
         child: Text(
-          'Start Track',
+          buttonName,
           style: TextStyle(color: Colors.white, fontSize: 18),
         ),
       ),

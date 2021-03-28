@@ -3,9 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:suraksha/Views/ShareLocationView.dart';
 import 'package:suraksha/Widgets/dart/Widgets.dart';
 
+import 'JoinUser.dart';
 import 'Login.dart';
+import 'ViewUser.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -55,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                         builder: (context, value, widget) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: FirebaseAuth.instance.currentUser != null
+                            child: currentUser != null
                                 ? Text(
                               currentUser.name,
                               style: TextStyle(
@@ -138,7 +141,10 @@ class _HomePageState extends State<HomePage> {
                                 Icons.bluetooth_connected),
                             longButton('Renault Duster', '2014, 898 , Diesel',
                                 Icons.car_repair),
-                            startButton(false),
+                            startButton(false, context, 'Start Track', (){ Navigator.push(context, MaterialPageRoute(builder: (context)=> ShareLocationView(passKey: FirebaseAuth.instance.currentUser.uid,)));
+                            }),
+                            startButton(false, context, 'View User', (){ Navigator.push(context, MaterialPageRoute(builder: (context)=> JoinUser()));
+                            }),
                           ],
                         ),
                       ),
