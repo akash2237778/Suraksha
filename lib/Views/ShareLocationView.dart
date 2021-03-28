@@ -5,8 +5,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:share/share.dart';
+import 'package:flutter_beep/flutter_beep.dart';
+
 
 Location location = new Location();
+Color backColor = Colors.white;
+double speedThreshold = 0.2;
 
 class ShareLocationView extends StatefulWidget {
   final String passKey;
@@ -33,8 +37,10 @@ class _ShareLocationViewState extends State<ShareLocationView> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
+
         body: SafeArea(
           child: Container(
+            color: backColor,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +75,7 @@ class _ShareLocationViewState extends State<ShareLocationView> {
                     Share.share(
                         'Check out my live location! My Suraksha Key : ' +
                             widget.passKey);
-                    log("View Beacon pressed");
+                    log("pressed");
                   })
                 ],
               ),
@@ -90,12 +96,27 @@ class _ShareLocationViewState extends State<ShareLocationView> {
   }
 
   void locationSettings() async {
+
     await location.changeSettings(
       interval: 500, accuracy: LocationAccuracy.high,
       //distanceFilter:
     );
     location.onLocationChanged.listen((event) {
+
       if (this.mounted) {
+        print(event.speed);
+        if(event.speed>speedThreshold){
+          FlutterBeep.beep();
+          setState(() {
+
+            backColor = Colors.red;
+
+          });
+        }else{
+          setState(() {
+            backColor = Colors.white;
+          });
+        }
         setState(() {
           updateValue(event.latitude.toString(), event.longitude.toString());
 
