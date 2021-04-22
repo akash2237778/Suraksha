@@ -1,6 +1,7 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:suraksha/Services/notification.dart';
 import 'package:suraksha/Views/ViewUser.dart';
 
 class JoinUser extends StatefulWidget {
@@ -17,7 +18,8 @@ class _JoinUserState extends State<JoinUser> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    beaconsKeyList = new List<String>();
+
+    beaconsKeyList = [];
 
     final FirebaseDatabase database = FirebaseDatabase();
     beacons = database.reference().child('userLocation');
@@ -106,6 +108,7 @@ class _JoinUserState extends State<JoinUser> {
                   ),
                   button("View Location", () {
                     if (beaconsKeyList.contains(dropdownValue))
+                      setFCMToken(dropdownValue);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

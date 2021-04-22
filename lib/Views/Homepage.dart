@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:suraksha/Services/notification.dart';
 import 'package:suraksha/Views/ShareLocationView.dart';
 import 'package:suraksha/Widgets/dart/Widgets.dart';
 
@@ -22,7 +23,15 @@ class _HomePageState extends State<HomePage> {
   bool isPress4 = true;
 
   @override
+  void initState() {
+   // sendAlert();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Container(
       child: Scaffold(
         appBar: homeAppBar(context),

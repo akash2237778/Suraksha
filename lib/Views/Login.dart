@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:suraksha/Services/notification.dart';
 
-import 'package:suraksha/Entity/User.dart';
 import 'package:suraksha/Views/Homepage.dart';
 import 'package:suraksha/Views/Registration.dart';
 import '../Entity/User.dart' as us;
@@ -23,6 +23,17 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   bool isProgressing = false;
+
+  @override
+  void initState() {
+    initialize();
+    notitficationPermission();
+
+   // initMessaging();
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final TextEditingController _emailController = TextEditingController();

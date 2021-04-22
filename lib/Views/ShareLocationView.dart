@@ -1,16 +1,20 @@
 import 'dart:collection';
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:share/share.dart';
 import 'package:flutter_beep/flutter_beep.dart';
+import 'package:suraksha/Services/notification.dart';
 
 
 Location location = new Location();
 Color backColor = Colors.white;
 double speedThreshold = 0.2;
+Queue speedQ = Queue();
+Queue timeQ = Queue();
 
 class ShareLocationView extends StatefulWidget {
   final String passKey;
@@ -87,9 +91,9 @@ class _ShareLocationViewState extends State<ShareLocationView> {
   }
 
   int count = 0;
-  Future<void> updateValue(String lat, String long) async {
+  Future<void> updateValue(String lat, String long, bool isSafe, String speed) async {
     var obj = {
-      widget.passKey: {"lat": lat, "long": long}
+      widget.passKey: {"lat": lat, "long": long, "isSafe": isSafe , "speed":speed }
     };
     _ref.update(obj);
     count++;
@@ -104,8 +108,11 @@ class _ShareLocationViewState extends State<ShareLocationView> {
     location.onLocationChanged.listen((event) {
 
       if (this.mounted) {
-        print(event.speed);
+        queueManage(event.speed, event.time);
+       // print(event.speed);
         if(event.speed>speedThreshold){
+          updateValue(event.latitude.toString(), event.longitude.toString(), false, event.speed.toString());
+          sendAlert(FirebaseAuth.instance.currentUser.displayName, 'Speed' + event.speed.toString());
           FlutterBeep.beep();
           setState(() {
 
@@ -113,12 +120,14 @@ class _ShareLocationViewState extends State<ShareLocationView> {
 
           });
         }else{
+          updateValue(event.latitude.toString(), event.longitude.toString(), true, event.speed.toString());
           setState(() {
+
             backColor = Colors.white;
           });
         }
         setState(() {
-          updateValue(event.latitude.toString(), event.longitude.toString());
+
 
           log("update location");
         });
@@ -126,6 +135,25 @@ class _ShareLocationViewState extends State<ShareLocationView> {
     });
   }
 }
+
+void queueManage(double speed, double time) {
+  if (!timeQ.contains(time)) {
+    timeQ.addLast(time);
+    speedQ.addLast(speed);
+
+  }
+  if (speedQ.length > 1) {
+    if (speedQ.length > 2) {
+      speedQ.removeFirst();
+      timeQ.removeFirst();
+    }
+
+  }
+
+  log(speedQ.toString());
+  log(((timeQ.last-timeQ.first)/1000).toString());
+}
+
 
 GestureDetector button(String buttonText, Function onTap) {
   return GestureDetector(

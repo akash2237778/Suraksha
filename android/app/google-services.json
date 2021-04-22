@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "9568020093",
+    "project_id": "vehicle-tracker-with-sos",
+    "storage_bucket": "vehicle-tracker-with-sos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9568020093:android:25ae038380b11b2079b314",
+        "android_client_info": {
+          "package_name": "com.example.safe_journey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9568020093-codrpc7a4ggs1b8igfn49ii05gt4j8kd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1kJFBpzuijR7efTZWDJXe5h2Q8KWNzBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9568020093-codrpc7a4ggs1b8igfn49ii05gt4j8kd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9568020093:android:d5860158247c2ad479b314",
+        "android_client_info": {
+          "package_name": "com.example.suraksha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9568020093-codrpc7a4ggs1b8igfn49ii05gt4j8kd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1kJFBpzuijR7efTZWDJXe5h2Q8KWNzBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9568020093-codrpc7a4ggs1b8igfn49ii05gt4j8kd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
