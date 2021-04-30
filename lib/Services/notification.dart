@@ -154,7 +154,7 @@ void sendAlert(String name, String message) async{
 
   var snap = db.doc(uid).snapshots();
   snap.first.then((value){
-    //print(value.get('token').toString() + "    : val");
+    print(value.get('token').toString() + "    : val");
 
     Notifications().callOnFcmApiSendPushNotifications([value.get('token').toString() ], name, message);
 

@@ -40,6 +40,8 @@ dependencies:
   http: ^0.13.1
   flutter_local_notifications: ^5.0.0+1
   syncfusion_flutter_gauges: ^18.2.44
+  all_sensors: ^0.3.1+1
+  url_launcher: ^6.0.3
 
 
 dev_dependencies:

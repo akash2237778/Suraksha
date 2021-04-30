@@ -255,6 +255,10 @@ Widget homeAppBar(BuildContext context) {
                 } else {
                   currentUser = null;
                   userLoginAct.value = currentUser;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
                 }
               },
               child: Padding(
@@ -268,10 +272,7 @@ Widget homeAppBar(BuildContext context) {
     shadowColor: Colors.blue,
     elevation: 0,
     title: Center(
-        child: Image(
-            height: 45,
-            image: NetworkImage(
-                'https://envirocar.org/assets/logo_white.png')) //Text('enviroCar', style: TextStyle(fontSize: 35)),
+        child: Text('      Suraksha'),
     ),
   );
 }
